@@ -1,0 +1,62 @@
+
+
+-- Create table students with different fields.
+create table students
+(
+    student_id int primary key,
+    name varchar(50),
+    age int,
+    grade float
+)
+
+-- insert new data into students table.
+insert into students 
+(student_id, name, age, grade)
+values 
+(1,'haytham', 33, 90),
+(2,'basma', 22, 88)
+
+
+-- return or select all rows/data from table students.
+select * from students
+
+
+-- update specific column value of table students.
+update students
+set grade = 88
+where student_id=1
+
+
+-- delete a row with specific id, from students table.
+delete from students 
+where student_id=2
+
+
+
+
+
+
+
+-- create new table, named courses.
+create table courses
+(
+    course_id int primary key,
+    course_name varchar(50)
+)
+
+-- many to many relation between students and courses.
+create table course_enrollment
+(
+    ce_id serial primary key not null,
+    st_id int references students(student_id),
+    cs_id int references courses(course_id)   
+)
+
+
+-- select student name and his related course name, ( inner join )
+select s.name, c.course_name  
+from 
+students s 
+join course_enrollment ce on s.student_id = ce.st_id
+join courses c  on c.course_id = ce.cs_id
+
